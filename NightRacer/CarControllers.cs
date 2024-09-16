@@ -22,19 +22,19 @@ public class CarControllers : MonoBehaviour
     public float speed;
     public AnimationCurve steeringCurve;
     public AudioSource engineSound;
-    public AudioClip engineClip;  // Attach your engine sound clip in the Unity Editor
-    public float maxSpeed = 100f;  // Adjust the maximum speed as needed
+    public AudioClip engineClip;  
+    public float maxSpeed = 100f;  
 
     void Start()
     {
         playerRB = gameObject.GetComponent<Rigidbody>();
         engineSound = gameObject.AddComponent<AudioSource>();
-        engineSound.clip = engineClip;  // Attach your engine sound clip in the Unity Editor
+        engineSound.clip = engineClip; 
         engineSound.loop = true;
         engineSound.Play();
         InstantiateSmoke();
         
-        engineSound.volume = 2f;  // Adjust the volume as needed
+        engineSound.volume = 2f;  
     }
 
 
@@ -61,8 +61,8 @@ public class CarControllers : MonoBehaviour
         CheckParticles();
         ApplyWheelPositions();
 
-        // Adjust pitch based on speed
-        float pitch = Mathf.Lerp(0.5f, 2f, speed / maxSpeed);  // Adjust the pitch range as needed
+     
+        float pitch = Mathf.Lerp(0.5f, 2f, speed / maxSpeed); 
         engineSound.pitch = pitch;
     }
 
@@ -72,8 +72,7 @@ public class CarControllers : MonoBehaviour
 
         float movingDirection = Vector3.Dot(transform.forward, playerRB.velocity);
 
-        //steeringInput = Input.GetAxisRaw("Horizontal");
-        //gasInput = Input.GetAxisRaw("Vertical");
+   
 
         if (movingDirection < -0.5f && gasInput > 0)
         {
