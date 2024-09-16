@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 public class DriftController : MonoBehaviour
 {
+    // text components
     public Rigidbody playerRB;
     public TMP_Text totalScoreText;
     public TMP_Text currentScoreText;
     public TMP_Text factorText;
     public TMP_Text driftAngleText;
 
+    // tweakble components for drift mode 
     private float speed = 0;
     private float driftAngle=0;
     private float driftFactor;
@@ -22,13 +24,14 @@ public class DriftController : MonoBehaviour
     private bool isDrifting= false;
 
     private CarControllers carController;
-
+    // variables for it to detect if you are drifting or not 
     public float minimumSpeed = 5;
     public float minimumAngle = 10;
     public float driftingDelay = 0.2f;
     public GameObject DriftingObject;
     private IEnumerator stopDriftingCoroutine = null;
 
+    // color for the text 
     public Color normalDriftColor;
     public Color NearStopColor;
     public Color driftEndedColor;
@@ -51,9 +54,9 @@ public class DriftController : MonoBehaviour
     }
     void ManageDrift() 
     {
-        // snelheid berekenen
+        // calculating speed
         speed = playerRB.velocity.magnitude;
-        // angle van de drift berekenen
+        // angle for the drifting being calulated
         driftAngle = Vector3.Angle(playerRB.transform.forward, (playerRB.velocity + playerRB.transform.forward).normalized);
         if (driftAngle>120)
         {
@@ -119,7 +122,7 @@ public class DriftController : MonoBehaviour
     }
     void ManageUI()
     {
-        // Alpa aanpassen van de Text 
+        // alpha for the text 
         normalDriftColor.a= 255;
         NearStopColor.a = 255;
         driftEndedColor.a = 255;
@@ -129,7 +132,7 @@ public class DriftController : MonoBehaviour
         currentScoreText.text = currentScore.ToString("###,###,000");
         driftAngleText.text = driftAngle.ToString("###,##0") + "�";
     }
-
+    // sounds
     void PlayDriftSound()
     {
         if (!isDriftSoundPlaying && driftSound != null)
@@ -138,7 +141,7 @@ public class DriftController : MonoBehaviour
             isDriftSoundPlaying = true;
         }
     }
-
+    // sounds
     void StopDriftSound()
     {
         if (isDriftSoundPlaying && driftSound != null)
@@ -147,7 +150,7 @@ public class DriftController : MonoBehaviour
             isDriftSoundPlaying = false;
         }
     }
-
+    // stop drifting 
     private void OnCollisionExit(Collision other)
     {
         StopDrifting();

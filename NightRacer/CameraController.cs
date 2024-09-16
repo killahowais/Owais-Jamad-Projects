@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    // components 
     public Transform player;
     private Rigidbody playerRB;
     public Vector3 Offset;
+    // tweakable
     public float speed;
-    // Start is called before the first frame update
+    
+
     void Start()
     {
         playerRB = player.GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
+  // camera gimble
     void LateUpdate()
     {
         Vector3 playerForward = (playerRB.velocity + player.transform.forward).normalized;

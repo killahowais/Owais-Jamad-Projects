@@ -22,22 +22,22 @@ public class CarControllers : MonoBehaviour
     public float speed;
     public AnimationCurve steeringCurve;
     public AudioSource engineSound;
-    public AudioClip engineClip;  // Attach your engine sound clip in the Unity Editor
-    public float maxSpeed = 100f;  // Adjust the maximum speed as needed
+    public AudioClip engineClip; 
+    public float maxSpeed = 100f;  
 
     void Start()
     {
         playerRB = gameObject.GetComponent<Rigidbody>();
         engineSound = gameObject.AddComponent<AudioSource>();
-        engineSound.clip = engineClip;  // Attach your engine sound clip in the Unity Editor
+        engineSound.clip = engineClip; 
         engineSound.loop = true;
         engineSound.Play();
         InstantiateSmoke();
         
-        engineSound.volume = 2f;  // Adjust the volume as needed
+        engineSound.volume = 2f; 
     }
 
-
+    // smoke for drifting 
     void InstantiateSmoke()
     {
         if (smokePrefab == null) return;
@@ -68,13 +68,12 @@ public class CarControllers : MonoBehaviour
 
     void CheckInput()
     {
+        // slip angle calculated
         slipAngle = Vector3.Angle(transform.forward, playerRB.velocity - transform.forward);
 
         float movingDirection = Vector3.Dot(transform.forward, playerRB.velocity);
 
-        //steeringInput = Input.GetAxisRaw("Horizontal");
-        //gasInput = Input.GetAxisRaw("Vertical");
-
+        // 
         if (movingDirection < -0.5f && gasInput > 0)
         {
             brakeInput = Mathf.Abs(gasInput);
@@ -104,6 +103,7 @@ public class CarControllers : MonoBehaviour
             brakeInput = 0;
         }
     }
+    // braking
     void ApplyBrake()
     {
         colliders.FRWheel.brakeTorque = brakeInput * brakePower * 0.7f;
@@ -112,11 +112,13 @@ public class CarControllers : MonoBehaviour
         colliders.RRWheel.brakeTorque = brakeInput * brakePower * 0.3f;
         colliders.RLWheel.brakeTorque = brakeInput * brakePower * 0.3f;
     }
+    // apply power
     void ApplyMotor()
     {
         colliders.RRWheel.motorTorque = motorPower * gasInput;
         colliders.RLWheel.motorTorque = motorPower * gasInput;
     }
+    // steering
     void ApplySteering()
     {
         float steeringAngle = steeringInput * steeringCurve.Evaluate(speed);
@@ -128,6 +130,7 @@ public class CarControllers : MonoBehaviour
         colliders.FRWheel.steerAngle = steeringAngle;
         colliders.FLWheel.steerAngle = steeringAngle;
     }
+    // spinning the wheels 
     void ApplyWheelPositions()
     {
         UpdateWheel(colliders.FRWheel, wheelMeshes.FRWheel);
@@ -135,7 +138,7 @@ public class CarControllers : MonoBehaviour
         UpdateWheel(colliders.RRWheel, wheelMeshes.RRWheel);
         UpdateWheel(colliders.RLWheel, wheelMeshes.RLWheel);
     }
-
+    // particles 
     void CheckParticles()
     {
         if (wheelParticles.FRWheel == null) return;
@@ -199,6 +202,7 @@ public class CarControllers : MonoBehaviour
         gasInput = input;
     }
 }
+// all wheel components for tweaking in the inspector
 
 [System.Serializable]
 public class WheelColliders
