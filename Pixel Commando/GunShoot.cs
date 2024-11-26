@@ -10,7 +10,7 @@ public interface IDamageable
 
     }
 }
-public class _GunShoot : MonoBehaviour
+public class GunShoot : MonoBehaviour
 {
     public string GunName;
     public int CurrentAmmo;
@@ -27,6 +27,7 @@ public class _GunShoot : MonoBehaviour
     [SerializeField] Transform _shootPos;
     [SerializeField] SpriteRenderer _gunSprite;
 
+    // update for the button to call this coroutine
     public void StartShooting()
     {
         _isShooting = true;
@@ -35,11 +36,13 @@ public class _GunShoot : MonoBehaviour
             StartCoroutine(Shoot());
         }
     }
+    // stop shooting
     public void StopShooting() 
     {
       _isShooting =false;
     }
 
+    // shoot logic
     IEnumerator Shoot() 
     {
         _isShootingCoroutineRunning = true;
@@ -83,7 +86,7 @@ public class _GunShoot : MonoBehaviour
         }
         yield return null;
     }
-
+    // update for the button to call reload coroutine
     public void Reload() 
     {
         StartCoroutine(ReloadGun());

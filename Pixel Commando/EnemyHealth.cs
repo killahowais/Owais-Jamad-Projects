@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class _EnemyHealth : MonoBehaviour, IDamageable
+public class EnemyHealth : MonoBehaviour, IDamageable
 {
     public int Health = 10;
 
@@ -13,12 +13,13 @@ public class _EnemyHealth : MonoBehaviour, IDamageable
             Destroy(gameObject);
         }
     }
-
+    // hits
     public void Hit()
     {
         Health--;
     }
 
+    // damage 
     public void Damage(float damage)
     {
         Health--;
